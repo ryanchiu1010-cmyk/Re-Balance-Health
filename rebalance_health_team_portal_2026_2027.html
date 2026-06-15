@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Re-Balance Health Team Portal</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --ink: #172033;
+      --muted: #637083;
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --teal: #14b8a6;
+      --line: #e5e7eb;
+      --soft-blue: #eff6ff;
+      --soft-teal: #ecfeff;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    input[name="lang"] {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .page { display: none; }
+
+    #lang-en:checked ~ .site #en,
+    #lang-zhHant:checked ~ .site #zhHant,
+    #lang-zhHans:checked ~ .site #zhHans {
+      display: block;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 900;
+      color: var(--blue-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .lang-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      display: inline-block;
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      background: white;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    #lang-en:checked ~ .site .tab[for="lang-en"],
+    #lang-zhHant:checked ~ .site .tab[for="lang-zhHant"],
+    #lang-zhHans:checked ~ .site .tab[for="lang-zhHans"] {
+      background: var(--blue);
+      color: white;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1d4ed8, #14b8a6);
+      color: white;
+      padding: 72px 18px 58px;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      letter-spacing: -0.06em;
+      line-height: 1.05;
+    }
+
+    .tagline {
+      font-size: clamp(1.05rem, 2.4vw, 1.55rem);
+      margin: 18px 0 4px;
+      font-weight: 700;
+      opacity: 0.98;
+    }
+
+    .slogan {
+      margin: 18px auto 0;
+      display: inline-block;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.32);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.2rem;
+    }
+
+    .meta {
+      margin-top: 16px;
+      opacity: 0.92;
+      font-weight: 600;
+    }
+
+    .nav {
+      background: white;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 57px;
+      z-index: 15;
+    }
+
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 18px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .nav a {
+      color: var(--blue-dark);
+      text-decoration: none;
+      font-weight: 750;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--soft-blue);
+      font-size: 0.95rem;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 28px auto;
+      padding: 0 18px 64px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 30px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      color: var(--blue-dark);
+      margin: 0 0 14px;
+      font-size: clamp(1.55rem, 3vw, 2.1rem);
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      color: #0f172a;
+      font-size: 1.15rem;
+    }
+
+    p { margin: 8px 0 14px; }
+    ul, ol { padding-left: 22px; }
+
+    .lead {
+      font-size: 1.12rem;
+      color: #253149;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--soft-teal);
+      border: 1px solid #99f6e4;
+      color: #0f766e;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .card.accent {
+      background: linear-gradient(135deg, #eff6ff, #ecfeff);
+      border-color: #bfdbfe;
+    }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .step {
+      background: var(--soft-blue);
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+      font-weight: 900;
+      color: var(--blue-dark);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+    }
+
+    .table th, .table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+    }
+
+    .table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .checklist li {
+      list-style: none;
+      margin: 7px 0;
+    }
+
+    .checklist li::before {
+      content: "□ ";
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 18px;
+      color: var(--muted);
+      background: white;
+      border-top: 1px solid var(--line);
+    }
+
+    @media print {
+      .topbar, .nav { display: none; }
+      .page { display: block !important; }
+      section { break-inside: avoid; box-shadow: none; }
+      body { background: white; }
+    }
+  </style>
+</head>
+<body>
+
+<input type="radio" name="lang" id="lang-en">
+<input type="radio" name="lang" id="lang-zhHant" checked>
+<input type="radio" name="lang" id="lang-zhHans">
+
+<div class="site">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Re-Balance Health Team Portal</div>
+      <div class="lang-tabs">
+        <label class="tab" for="lang-en">English</label>
+        <label class="tab" for="lang-zhHant">繁體中文</label>
+        <label class="tab" for="lang-zhHans">简体中文</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- English -->
+  <div id="en" class="page">
+    <div class="hero">
+      <div class="hero-inner">
+        <h1>Re-Balance Health</h1>
+        <div class="tagline">Family Health Memory, Assessment & AI Copilot</div>
+        <div class="slogan">One Family. One Health Journey.</div>
+        <div class="meta">Conrad Challenge 2026–2027 · Team Portal</div>
+      </div>
+    </div>
+
+    <nav class="nav"><div class="nav-inner">
+      <a href="#en-home">Home</a><a href="#en-meeting">Meeting</a><a href="#en-research">Research</a><a href="#en-memory">Family Health Memory</a><a href="#en-ai">AI Copilot</a><a href="#en-assessment">Health Assessment</a><a href="#en-team">Team</a><a href="#en-conrad">Conrad</a>
+    </div></nav>
+
+    <main>
+      <section id="en-home">
+        <span class="pill">Home</span>
+        <h2>Project Vision</h2>
+        <p class="lead">A family can include different generations, different locations, and different health needs. Re-Balance Health helps families collect, understand, assess, and care for their health through one connected AI-powered health journey.</p>
+        <div class="step-row">
+          <div class="step">Collect</div>
+          <div class="step">Interpret</div>
+          <div class="step">Assess</div>
+          <div class="step">Care</div>
+        </div>
+        <div class="grid">
+          <div class="card accent"><h3>Problem</h3><p>Health data is scattered across hospitals, apps, wearable devices, and paper records. Families often struggle to find, understand, and share important health information.</p></div>
+          <div class="card accent"><h3>Solution</h3><p>Re-Balance Health creates a Family Health Memory supported by AI Copilot and smartphone-based Health Assessment.</p></div>
+          <div class="card accent"><h3>Impact</h3><p>The platform supports teen athletes, families, caregivers, and older adults by turning fragmented data into a clear health journey.</p></div>
+        </div>
+      </section>
+
+      <section id="en-meeting">
+        <span class="pill">Meeting</span>
+        <h2>Team Kickoff Meeting #1</h2>
+        <p><strong>Date:</strong> June 2026 &nbsp;&nbsp; <strong>Competition:</strong> Conrad Challenge 2026–2027</p>
+        <h3>Agenda</h3>
+        <ol>
+          <li>Conrad Challenge Introduction</li>
+          <li>Re-Balance Health Project Vision</li>
+          <li>Team Structure and Responsibilities</li>
+          <li>First Two-Week Sprint Goals</li>
+        </ol>
+        <h3>Discussion Questions</h3>
+        <ol>
+          <li>What core problem are we solving?</li>
+          <li>Who are our target users?</li>
+          <li>Which feature is most valuable?</li>
+          <li>How is Re-Balance Health different from existing products?</li>
+          <li>What should our MVP include?</li>
+        </ol>
+      </section>
+
+      <section id="en-research">
+        <span class="pill">Research</span>
+        <h2>Market Research & User Research</h2>
+        <div class="grid">
+          <div class="card"><h3>Competitor Analysis</h3><ul><li>Apple Health</li><li>MyChart</li><li>Guava Health</li><li>CareClinic</li><li>Family Vitals</li></ul></div>
+          <div class="card"><h3>User Research</h3><ul><li>User interviews</li><li>Family health management survey</li><li>Teen athlete recovery survey</li><li>Key insights summary</li></ul></div>
+        </div>
+      </section>
+
+      <section id="en-memory">
+        <span class="pill">Module 1</span>
+        <h2>Family Health Memory</h2>
+        <p>Family Health Memory organizes health records, medical reports, health events, and family health history into a timeline that can be understood and shared with proper permission settings.</p>
+        <div class="grid">
+          <div class="card"><h3>Core Features</h3><ul><li>Health Timeline</li><li>Medical Records</li><li>Family Sharing</li><li>Privacy Control</li></ul></div>
+          <div class="card"><h3>User Roles</h3><ul><li>Owner</li><li>Co-Manager</li><li>Member</li></ul></div>
+        </div>
+      </section>
+
+      <section id="en-ai">
+        <span class="pill">Module 2</span>
+        <h2>AI Copilot</h2>
+        <p>AI Copilot helps users interpret medical reports, summarize health history, translate medical information into plain language, and search family health memory.</p>
+        <div class="grid">
+          <div class="card"><h3>Features</h3><ul><li>Medical report interpretation</li><li>Multilingual support</li><li>Health summary</li><li>Family Health Memory search</li></ul></div>
+          <div class="card"><h3>Prototype Goals</h3><ul><li>AI flow diagram</li><li>Sample report explanation</li><li>Health summary demo</li></ul></div>
+        </div>
+      </section>
+
+      <section id="en-assessment">
+        <span class="pill">Module 3</span>
+        <h2>Health Assessment</h2>
+        <p>Health Assessment uses smartphone camera-based tests to evaluate balance, movement quality, fatigue, and recovery needs.</p>
+        <div class="grid">
+          <div class="card"><h3>Teen Athlete Fatigue Detector</h3><ul><li>Single-leg balance</li><li>Marching in place</li><li>Baseline Tracker</li><li>Fatigue score concept</li></ul></div>
+          <div class="card"><h3>MediaPipe Research</h3><ul><li>Pose detection</li><li>Motion analysis</li><li>Stability indicators</li><li>Recovery trends</li></ul></div>
+        </div>
+      </section>
+
+      <section id="en-team">
+        <span class="pill">Team</span>
+        <h2>Team Structure</h2>
+        <table class="table">
+          <tr><th>Member</th><th>Role</th><th>Main Responsibility</th></tr>
+          <tr><td>A</td><td>Product & Privacy</td><td>MVP, user stories, family roles, privacy framework</td></tr>
+          <tr><td>B</td><td>UI/UX & Website</td><td>Figma, prototype, landing page, Team Portal</td></tr>
+          <tr><td>C</td><td>AI Copilot</td><td>Report interpretation, multilingual support, health summary</td></tr>
+          <tr><td>D</td><td>Health Assessment</td><td>MediaPipe, single-leg balance, marching test, fatigue detector</td></tr>
+        </table>
+      </section>
+
+      <section id="en-conrad">
+        <span class="pill">Conrad Challenge</span>
+        <h2>Conrad Proposal Structure</h2>
+        <div class="grid">
+          <div class="card"><h3>Innovation Stage</h3><ol><li>Problem</li><li>Users</li><li>Solution</li><li>Technology</li><li>Validation</li></ol></div>
+          <div class="card"><h3>Execution Plan</h3><ol><li>Feasibility</li><li>Risks</li><li>Funding</li><li>Next Steps</li><li>Prototype Plan</li></ol></div>
+        </div>
+        <h3>First Two-Week Sprint</h3>
+        <ul class="checklist">
+          <li>Analyze 4–5 existing products</li><li>Create survey questions</li><li>Prepare interview questions</li><li>Build MVP feature list</li><li>Create first UI wireframes</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- Traditional Chinese -->
+  <div id="zhHant" class="page">
+    <div class="hero">
+      <div class="hero-inner">
+        <h1>Re-Balance Health</h1>
+        <div class="tagline">Family Health Memory, Assessment & AI Copilot</div>
+        <div class="slogan">One Family. One Health Journey.</div>
+        <div class="meta">Conrad Challenge 2026–2027 · Team Portal</div>
+      </div>
+    </div>
+
+    <nav class="nav"><div class="nav-inner">
+      <a href="#zh-home">首頁</a><a href="#zh-meeting">會議</a><a href="#zh-research">研究</a><a href="#zh-memory">家庭健康記憶</a><a href="#zh-ai">AI Copilot</a><a href="#zh-assessment">健康評估</a><a href="#zh-team">團隊</a><a href="#zh-conrad">Conrad</a>
+    </div></nav>
+
+    <main>
+      <section id="zh-home">
+        <span class="pill">首頁</span>
+        <h2>專案願景</h2>
+        <p class="lead">一個家庭，可能有不同世代、不同居住地、不同健康需求。Re-Balance Health 幫助家庭透過 AI 收集、解譯、評估與照護健康，建立一條完整的家庭健康旅程。</p>
+        <div class="step-row"><div class="step">Collect 收集</div><div class="step">Interpret 解譯</div><div class="step">Assess 評估</div><div class="step">Care 照護</div></div>
+        <div class="grid">
+          <div class="card accent"><h3>核心問題</h3><p>健康資料散落在醫院、App、穿戴裝置與紙本紀錄中，家人很難找到、理解與共享重要健康資訊。</p></div>
+          <div class="card accent"><h3>解決方案</h3><p>Re-Balance Health 建立 Family Health Memory，並結合 AI Copilot 與手機鏡頭健康評估。</p></div>
+          <div class="card accent"><h3>影響力</h3><p>協助青少年運動員、家庭照護者與長者，把零散資料轉化為清楚的健康旅程。</p></div>
+        </div>
+      </section>
+
+      <section id="zh-meeting">
+        <span class="pill">會議</span>
+        <h2>團隊第一次會議</h2>
+        <p><strong>日期：</strong>2026 年 6 月 &nbsp;&nbsp; <strong>競賽：</strong>Conrad Challenge 2026–2027</p>
+        <h3>會議流程</h3>
+        <ol><li>Conrad Challenge 介紹</li><li>Re-Balance Health 專案願景</li><li>團隊分工與責任</li><li>未來兩週 Sprint 目標</li></ol>
+        <h3>討論問題</h3>
+        <ol><li>我們真正想解決的核心問題是什麼？</li><li>誰是目標使用者？</li><li>哪個功能最有價值？</li><li>Re-Balance Health 與現有產品有何不同？</li><li>MVP 最少需要包含什麼？</li></ol>
+      </section>
+
+      <section id="zh-research">
+        <span class="pill">研究</span>
+        <h2>市場調查與使用者研究</h2>
+        <div class="grid">
+          <div class="card"><h3>競品分析</h3><ul><li>Apple Health</li><li>MyChart</li><li>Guava Health</li><li>CareClinic</li><li>Family Vitals</li></ul></div>
+          <div class="card"><h3>使用者研究</h3><ul><li>使用者訪談</li><li>家庭健康管理問卷</li><li>青少年運動恢復問卷</li><li>重點洞察整理</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zh-memory">
+        <span class="pill">模組一</span>
+        <h2>Family Health Memory</h2>
+        <p>Family Health Memory 將健康紀錄、醫療報告、健康事件與家族病史整理成時間軸，並透過權限設定讓家庭成員安全理解與共享。</p>
+        <div class="grid">
+          <div class="card"><h3>核心功能</h3><ul><li>健康時間軸</li><li>醫療紀錄</li><li>家庭共享</li><li>隱私權控制</li></ul></div>
+          <div class="card"><h3>家庭角色</h3><ul><li>Owner</li><li>Co-Manager</li><li>Member</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zh-ai">
+        <span class="pill">模組二</span>
+        <h2>AI Copilot</h2>
+        <p>AI Copilot 協助使用者解讀醫療報告、摘要健康歷史、用白話說明醫療資訊，並能搜尋家庭健康記憶。</p>
+        <div class="grid">
+          <div class="card"><h3>功能</h3><ul><li>醫療報告解讀</li><li>多語言支援</li><li>健康摘要</li><li>Family Health Memory 搜尋</li></ul></div>
+          <div class="card"><h3>原型目標</h3><ul><li>AI 流程圖</li><li>範例報告解釋</li><li>健康摘要 Demo</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zh-assessment">
+        <span class="pill">模組三</span>
+        <h2>Health Assessment</h2>
+        <p>Health Assessment 使用手機鏡頭進行測試，評估平衡能力、動作品質、疲勞狀態與恢復需求。</p>
+        <div class="grid">
+          <div class="card"><h3>Teen Athlete Fatigue Detector</h3><ul><li>單腳站立</li><li>原地踏步</li><li>Baseline Tracker</li><li>疲勞分數概念</li></ul></div>
+          <div class="card"><h3>MediaPipe 研究</h3><ul><li>姿勢偵測</li><li>動作分析</li><li>穩定性指標</li><li>恢復趨勢</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zh-team">
+        <span class="pill">團隊</span>
+        <h2>團隊分工</h2>
+        <table class="table">
+          <tr><th>成員</th><th>角色</th><th>主要負責</th></tr>
+          <tr><td>A</td><td>Product & Privacy</td><td>MVP、User Story、家庭角色、隱私權架構</td></tr>
+          <tr><td>B</td><td>UI/UX & Website</td><td>Figma、Prototype、Landing Page、Team Portal</td></tr>
+          <tr><td>C</td><td>AI Copilot</td><td>報告解讀、多語言、健康摘要</td></tr>
+          <tr><td>D</td><td>Health Assessment</td><td>MediaPipe、單腳站立、原地踏步、疲勞偵測</td></tr>
+        </table>
+      </section>
+
+      <section id="zh-conrad">
+        <span class="pill">Conrad Challenge</span>
+        <h2>Conrad Proposal 架構</h2>
+        <div class="grid">
+          <div class="card"><h3>Innovation Stage</h3><ol><li>Problem</li><li>Users</li><li>Solution</li><li>Technology</li><li>Validation</li></ol></div>
+          <div class="card"><h3>執行計畫</h3><ol><li>Feasibility</li><li>Risks</li><li>Funding</li><li>Next Steps</li><li>Prototype Plan</li></ol></div>
+        </div>
+        <h3>第一個兩週 Sprint</h3>
+        <ul class="checklist"><li>分析 4–5 個現有產品</li><li>完成問卷題目</li><li>完成訪談題目</li><li>建立 MVP 功能列表</li><li>完成第一版 UI Wireframe</li></ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- Simplified Chinese -->
+  <div id="zhHans" class="page">
+    <div class="hero">
+      <div class="hero-inner">
+        <h1>Re-Balance Health</h1>
+        <div class="tagline">Family Health Memory, Assessment & AI Copilot</div>
+        <div class="slogan">One Family. One Health Journey.</div>
+        <div class="meta">Conrad Challenge 2026–2027 · Team Portal</div>
+      </div>
+    </div>
+
+    <nav class="nav"><div class="nav-inner">
+      <a href="#zhs-home">首页</a><a href="#zhs-meeting">会议</a><a href="#zhs-research">研究</a><a href="#zhs-memory">家庭健康记忆</a><a href="#zhs-ai">AI Copilot</a><a href="#zhs-assessment">健康评估</a><a href="#zhs-team">团队</a><a href="#zhs-conrad">Conrad</a>
+    </div></nav>
+
+    <main>
+      <section id="zhs-home">
+        <span class="pill">首页</span>
+        <h2>项目愿景</h2>
+        <p class="lead">一个家庭，可能有不同世代、不同居住地点、不同健康需求。Re-Balance Health 帮助家庭通过 AI 收集、解读、评估与照护健康，建立一条完整的家庭健康旅程。</p>
+        <div class="step-row"><div class="step">Collect 收集</div><div class="step">Interpret 解读</div><div class="step">Assess 评估</div><div class="step">Care 照护</div></div>
+        <div class="grid">
+          <div class="card accent"><h3>核心问题</h3><p>健康资料分散在医院、App、穿戴设备与纸本记录中，家人很难找到、理解与共享重要健康信息。</p></div>
+          <div class="card accent"><h3>解决方案</h3><p>Re-Balance Health 建立 Family Health Memory，并结合 AI Copilot 与手机镜头健康评估。</p></div>
+          <div class="card accent"><h3>影响力</h3><p>协助青少年运动员、家庭照护者与老年人，把零散资料转化为清楚的健康旅程。</p></div>
+        </div>
+      </section>
+
+      <section id="zhs-meeting">
+        <span class="pill">会议</span>
+        <h2>团队第一次会议</h2>
+        <p><strong>日期：</strong>2026 年 6 月 &nbsp;&nbsp; <strong>竞赛：</strong>Conrad Challenge 2026–2027</p>
+        <h3>会议流程</h3>
+        <ol><li>Conrad Challenge 介绍</li><li>Re-Balance Health 项目愿景</li><li>团队分工与责任</li><li>未来两周 Sprint 目标</li></ol>
+        <h3>讨论问题</h3>
+        <ol><li>我们真正想解决的核心问题是什么？</li><li>谁是目标用户？</li><li>哪个功能最有价值？</li><li>Re-Balance Health 与现有产品有何不同？</li><li>MVP 最少需要包含什么？</li></ol>
+      </section>
+
+      <section id="zhs-research">
+        <span class="pill">研究</span>
+        <h2>市场调研与用户研究</h2>
+        <div class="grid">
+          <div class="card"><h3>竞品分析</h3><ul><li>Apple Health</li><li>MyChart</li><li>Guava Health</li><li>CareClinic</li><li>Family Vitals</li></ul></div>
+          <div class="card"><h3>用户研究</h3><ul><li>用户访谈</li><li>家庭健康管理问卷</li><li>青少年运动恢复问卷</li><li>重点洞察整理</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zhs-memory">
+        <span class="pill">模块一</span>
+        <h2>Family Health Memory</h2>
+        <p>Family Health Memory 将健康记录、医疗报告、健康事件与家族病史整理成时间轴，并通过权限设置让家庭成员安全理解与共享。</p>
+        <div class="grid">
+          <div class="card"><h3>核心功能</h3><ul><li>健康时间轴</li><li>医疗记录</li><li>家庭共享</li><li>隐私权限控制</li></ul></div>
+          <div class="card"><h3>家庭角色</h3><ul><li>Owner</li><li>Co-Manager</li><li>Member</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zhs-ai">
+        <span class="pill">模块二</span>
+        <h2>AI Copilot</h2>
+        <p>AI Copilot 协助用户解读医疗报告、摘要健康历史、用白话说明医疗信息，并能搜索家庭健康记忆。</p>
+        <div class="grid">
+          <div class="card"><h3>功能</h3><ul><li>医疗报告解读</li><li>多语言支持</li><li>健康摘要</li><li>Family Health Memory 搜索</li></ul></div>
+          <div class="card"><h3>原型目标</h3><ul><li>AI 流程图</li><li>范例报告解释</li><li>健康摘要 Demo</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zhs-assessment">
+        <span class="pill">模块三</span>
+        <h2>Health Assessment</h2>
+        <p>Health Assessment 使用手机镜头进行测试，评估平衡能力、动作质量、疲劳状态与恢复需求。</p>
+        <div class="grid">
+          <div class="card"><h3>Teen Athlete Fatigue Detector</h3><ul><li>单脚站立</li><li>原地踏步</li><li>Baseline Tracker</li><li>疲劳分数概念</li></ul></div>
+          <div class="card"><h3>MediaPipe 研究</h3><ul><li>姿势检测</li><li>动作分析</li><li>稳定性指标</li><li>恢复趋势</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zhs-team">
+        <span class="pill">团队</span>
+        <h2>团队分工</h2>
+        <table class="table">
+          <tr><th>成员</th><th>角色</th><th>主要负责</th></tr>
+          <tr><td>A</td><td>Product & Privacy</td><td>MVP、User Story、家庭角色、隐私架构</td></tr>
+          <tr><td>B</td><td>UI/UX & Website</td><td>Figma、Prototype、Landing Page、Team Portal</td></tr>
+          <tr><td>C</td><td>AI Copilot</td><td>报告解读、多语言、健康摘要</td></tr>
+          <tr><td>D</td><td>Health Assessment</td><td>MediaPipe、单脚站立、原地踏步、疲劳检测</td></tr>
+        </table>
+      </section>
+
+      <section id="zhs-conrad">
+        <span class="pill">Conrad Challenge</span>
+        <h2>Conrad Proposal 架构</h2>
+        <div class="grid">
+          <div class="card"><h3>Innovation Stage</h3><ol><li>Problem</li><li>Users</li><li>Solution</li><li>Technology</li><li>Validation</li></ol></div>
+          <div class="card"><h3>执行计划</h3><ol><li>Feasibility</li><li>Risks</li><li>Funding</li><li>Next Steps</li><li>Prototype Plan</li></ol></div>
+        </div>
+        <h3>第一个两周 Sprint</h3>
+        <ul class="checklist"><li>分析 4–5 个现有产品</li><li>完成问卷题目</li><li>完成访谈题目</li><li>建立 MVP 功能列表</li><li>完成第一版 UI Wireframe</li></ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Re-Balance Health · Family Health Memory, Assessment & AI Copilot · One Family. One Health Journey. · Conrad Challenge 2026–2027
+  </footer>
+</div>
+
+</body>
+</html>
