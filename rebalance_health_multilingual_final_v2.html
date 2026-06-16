@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re-Balance Health</title>
+<style>
+:root{
+  --bg:#f6f8fb;--card:#fff;--ink:#172033;--muted:#637083;
+  --blue:#2563eb;--blue-dark:#1d4ed8;--teal:#14b8a6;
+  --line:#e5e7eb;--soft:#eff6ff;--soft-teal:#ecfeff;
+  --shadow:0 12px 30px rgba(15,23,42,.08)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+input[name="lang"]{position:absolute;left:-9999px}
+.page{display:none}
+#lang-en:checked ~ .site #en,
+#lang-zhHant:checked ~ .site #zhHant,
+#lang-zhHans:checked ~ .site #zhHans{display:block}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1080px;margin:0 auto;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-weight:900;color:var(--blue-dark)}
+.lang-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1px solid var(--blue);color:var(--blue);background:white;padding:7px 13px;border-radius:999px;font-weight:700;cursor:pointer;font-size:.95rem}
+#lang-en:checked ~ .site .tab[for="lang-en"],
+#lang-zhHant:checked ~ .site .tab[for="lang-zhHant"],
+#lang-zhHans:checked ~ .site .tab[for="lang-zhHans"]{background:var(--blue);color:white}
+.hero{background:linear-gradient(135deg,#1d4ed8,#14b8a6);color:white;text-align:center;padding:76px 20px 64px}
+.hero h1{font-size:clamp(2.7rem,7vw,5rem);margin:0;letter-spacing:-.06em;line-height:1.05}
+.tagline{font-size:clamp(1.05rem,2.4vw,1.55rem);font-weight:750;margin-top:18px}
+.slogan{display:inline-block;margin-top:18px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);padding:10px 18px;border-radius:999px;font-weight:900;font-size:1.15rem}
+.meta{margin-top:16px;opacity:.92;font-weight:600}
+nav{background:white;border-bottom:1px solid var(--line);position:sticky;top:57px;z-index:10;text-align:center;padding:12px;overflow-x:auto;white-space:nowrap}
+nav a{color:var(--blue-dark);text-decoration:none;font-weight:800;margin:0 6px;padding:8px 14px;border-radius:999px;background:var(--soft);display:inline-block}
+main{max-width:1080px;margin:28px auto;padding:0 18px 64px}
+section{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;margin-bottom:24px;box-shadow:var(--shadow)}
+h2{color:var(--blue-dark);margin:0 0 14px;font-size:clamp(1.55rem,3vw,2.1rem)}
+h3{margin:14px 0 8px;color:#0f172a}
+.lead{font-size:1.16rem;color:#253149}
+.pill{display:inline-block;padding:5px 11px;border-radius:999px;background:var(--soft-teal);border:1px solid #99f6e4;color:#0f766e;font-weight:800;font-size:.9rem;margin-bottom:10px}
+.steps,.grid{display:grid;gap:16px;margin-top:16px}
+.steps{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.step{background:var(--soft);border:1px solid #bfdbfe;border-radius:16px;padding:18px;text-align:center;font-weight:900;color:var(--blue-dark)}
+.grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:linear-gradient(135deg,#eff6ff,#ecfeff);border:1px solid #bfdbfe;border-radius:18px;padding:20px}
+.note{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:18px}
+footer{text-align:center;padding:28px 18px;color:var(--muted);background:white;border-top:1px solid var(--line)}
+@media print{.topbar,nav{display:none}.page{display:block!important}section{break-inside:avoid;box-shadow:none}body{background:white}}
+</style>
+</head>
+<body>
+
+<input type="radio" name="lang" id="lang-en">
+<input type="radio" name="lang" id="lang-zhHant" checked>
+<input type="radio" name="lang" id="lang-zhHans">
+
+<div class="site">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Re-Balance Health</div>
+      <div class="lang-tabs">
+        <label class="tab" for="lang-en">English</label>
+        <label class="tab" for="lang-zhHant">繁體中文</label>
+        <label class="tab" for="lang-zhHans">简体中文</label>
+      </div>
+    </div>
+  </div>
+
+  <div id="en" class="page">
+    <div class="hero">
+      <h1>Re-Balance Health</h1>
+      <div class="tagline">Family Health Memory, Assessment & AI Copilot</div>
+      <div class="slogan">One Family. One Health Journey.</div>
+      <div class="meta">Conrad Challenge 2026–2027</div>
+    </div>
+    <nav><a href="#en-home">Home</a><a href="#en-product">Product</a><a href="#en-impact">Impact</a><a href="#en-team">Team</a></nav>
+    <main>
+      <section id="en-home">
+        <span class="pill">Home</span>
+        <h2>Our Vision</h2>
+        <p class="lead">One family. Different generations. Different locations. Different health needs.</p>
+        <p class="lead">Re-Balance Health uses AI to transform scattered health data into an understandable, trackable, and actionable family health journey.</p>
+        <div class="steps"><div class="step">Collect</div><div class="step">Interpret</div><div class="step">Assess</div><div class="step">Care</div></div>
+      </section>
+
+      <section id="en-product">
+        <span class="pill">Product</span>
+        <h2>Core Product Modules</h2>
+        <div class="grid">
+          <div class="card"><h3>1. Family Health Memory</h3><p><strong>What happened?</strong></p><p>Organizes scattered health data into a meaningful family health record.</p><ul><li>Health Records</li><li>Medical Reports</li><li>Health Timeline</li><li>Family Sharing</li><li>Privacy Control</li></ul></div>
+          <div class="card"><h3>2. AI Copilot</h3><p><strong>What does it mean?</strong></p><p>Helps users understand medical information and health trends.</p><ul><li>Medical Report Interpretation</li><li>Health Q&A</li><li>Health Insights & Guidance</li><li>Multilingual Support</li></ul></div>
+          <div class="card"><h3>3. AI-Powered Human Balance Monitoring System</h3><p><strong>How am I doing today?</strong></p><p>Uses smartphone camera-based tests to assess balance and movement.</p><ul><li>Single-Leg Balance Test</li><li>Marching Test</li><li>Movement Analysis</li><li>Baseline Tracker</li></ul></div>
+        </div>
+        <h2 style="margin-top:28px;">MVP (Phase 1)</h2>
+        <div class="note">
+          <h3>Minimum Viable Product</h3>
+          <p>The smallest version of the product that delivers meaningful value to users while validating the core concept.</p>
+          <p>The first version will focus on validating the core value and feasibility of Re-Balance Health.</p>
+        </div>
+        <div class="grid">
+          <div class="card"><h3>Family Health Memory</h3><ul><li>Upload Health Data</li><li>Health Timeline</li></ul></div>
+          <div class="card"><h3>AI Copilot</h3><ul><li>AI Report Interpretation</li><li>Health Q&A</li></ul></div>
+          <div class="card"><h3>Human Balance Monitoring</h3><ul><li>Single-Leg Balance Test</li><li>Marching Test</li><li>Baseline Tracker</li></ul></div>
+        </div>
+      </section>
+
+      <section id="en-impact">
+        <span class="pill">Impact</span>
+        <h2>Why It Matters</h2>
+        <p>Re-Balance Health helps family members across different age groups turn scattered health data into a clear, trackable health journey while protecting personal privacy.</p>
+        <p>Through AI medical information interpretation and smartphone-camera-based human balance monitoring, users can identify potential risks earlier, better understand their health status, and move from reactive treatment toward proactive prevention.</p>
+      </section>
+
+      <section id="en-team">
+        <span class="pill">Team</span>
+        <h2>Team</h2>
+        <div class="grid">
+          <div class="card"><h3>Team A — Family Health Memory</h3><p><strong>Member A</strong></p><ul><li>MVP Planning</li><li>User Story</li><li>Privacy Framework</li></ul><p><strong>Member B</strong></p><ul><li>UI / UX</li><li>Website</li><li>Prototype</li></ul></div>
+          <div class="card"><h3>Team B — Health Intelligence</h3><p><strong>Member C</strong></p><ul><li>AI Copilot</li><li>Medical Report Interpretation</li></ul><p><strong>Member D</strong></p><ul><li>Human Balance Monitoring</li><li>MediaPipe</li><li>Baseline Tracker</li></ul></div>
+        </div>
+        <h2 style="margin-top:28px;">Team Kickoff Meeting #1</h2>
+        <h3>Meeting Agenda</h3>
+        <ol><li>Conrad Challenge Introduction</li><li>Re-Balance Health Introduction</li><li>Product Framework</li><li>Core Product Modules</li><li>Team Structure</li><li>Open Discussion</li></ol>
+      </section>
+    </main>
+  </div>
+
+  <div id="zhHant" class="page">
+    <div class="hero">
+      <h1>Re-Balance Health</h1>
+      <div class="tagline">Family Health Memory, Assessment & AI Copilot</div>
+      <div class="slogan">One Family. One Health Journey.</div>
+      <div class="meta">Conrad Challenge 2026–2027</div>
+    </div>
+    <nav><a href="#zh-home">首頁</a><a href="#zh-product">產品</a><a href="#zh-impact">影響力</a><a href="#zh-team">團隊</a></nav>
+    <main>
+      <section id="zh-home">
+        <span class="pill">首頁</span>
+        <h2>Our Vision</h2>
+        <p class="lead">一個家庭、不同世代、不同居住地、不同健康需求。</p>
+        <p class="lead">Re-Balance Health 利用 AI 將零散的健康資料轉化為可理解、可追蹤且可行動的家庭健康旅程。</p>
+        <div class="steps"><div class="step">Collect 收集</div><div class="step">Interpret 解譯</div><div class="step">Assess 評估</div><div class="step">Care 照護</div></div>
+      </section>
+
+      <section id="zh-product">
+        <span class="pill">產品</span>
+        <h2>Core Product Modules</h2>
+        <div class="grid">
+          <div class="card"><h3>1. Family Health Memory</h3><p><strong>What happened?</strong></p><p>將零散的健康資料整理成完整且有意義的家庭健康記憶。</p><ul><li>Health Records 健康紀錄</li><li>Medical Reports 醫療報告</li><li>Health Timeline 健康時間軸</li><li>Family Sharing 家庭共享</li><li>Privacy Control 隱私權控制</li></ul></div>
+          <div class="card"><h3>2. AI Copilot</h3><p><strong>What does it mean?</strong></p><p>協助使用者理解健康資訊與醫療資料。</p><ul><li>Medical Report Interpretation 醫療報告解讀</li><li>Health Q&A 健康問答</li><li>Health Insights & Guidance 健康洞察與諮詢</li><li>Multilingual Support 多語言支援</li></ul></div>
+          <div class="card"><h3>3. AI-Powered Human Balance Monitoring System</h3><p><strong>How am I doing today?</strong></p><p>利用手機鏡頭進行平衡與動作功能評估。</p><ul><li>Single-Leg Balance Test 單腳站立測試</li><li>Marching Test 原地踏步測試</li><li>Movement Analysis 動作分析</li><li>Baseline Tracker 個人基準線追蹤</li></ul></div>
+        </div>
+        <h2 style="margin-top:28px;">MVP (Phase 1)</h2>
+        <div class="note">
+          <h3>Minimum Viable Product 最小可行產品</h3>
+          <p>The smallest version of the product that delivers meaningful value to users while validating the core concept.</p>
+          <p>第一階段產品將聚焦於驗證 Re-Balance Health 的核心價值與可行性。</p>
+        </div>
+        <div class="grid">
+          <div class="card"><h3>Family Health Memory</h3><ul><li>Upload Health Data 上傳健康資料</li><li>Health Timeline 健康時間軸</li></ul></div>
+          <div class="card"><h3>AI Copilot</h3><ul><li>AI Report Interpretation AI 報告解讀</li><li>Health Q&A 健康問答</li></ul></div>
+          <div class="card"><h3>Human Balance Monitoring</h3><ul><li>Single-Leg Balance Test 單腳站立測試</li><li>Marching Test 原地踏步測試</li><li>Baseline Tracker 個人基準線追蹤</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zh-impact">
+        <span class="pill">影響力</span>
+        <h2>為什麼重要？</h2>
+        <p>協助不同年齡層的家庭成員，將零散的健康資料轉化為清楚、可追蹤且兼顧個人隱私的健康旅程。</p>
+        <p>透過 AI 醫療資訊解譯與手機鏡頭人體平衡監測技術，幫助使用者更早發現潛在風險、更深入了解自身健康狀態，並從被動治療走向主動預防，做出更明智的健康決策。</p>
+      </section>
+
+      <section id="zh-team">
+        <span class="pill">團隊</span>
+        <h2>Team</h2>
+        <div class="grid">
+          <div class="card"><h3>Team A — Family Health Memory</h3><p><strong>Member A</strong></p><ul><li>MVP Planning</li><li>User Story</li><li>Privacy Framework</li></ul><p><strong>Member B</strong></p><ul><li>UI / UX</li><li>Website</li><li>Prototype</li></ul></div>
+          <div class="card"><h3>Team B — Health Intelligence</h3><p><strong>Member C</strong></p><ul><li>AI Copilot</li><li>Medical Report Interpretation</li></ul><p><strong>Member D</strong></p><ul><li>Human Balance Monitoring</li><li>MediaPipe</li><li>Baseline Tracker</li></ul></div>
+        </div>
+        <h2 style="margin-top:28px;">Team Kickoff Meeting #1</h2>
+        <h3>Meeting Agenda</h3>
+        <ol><li>Conrad Challenge Introduction</li><li>Re-Balance Health Introduction</li><li>Product Framework</li><li>Core Product Modules</li><li>Team Structure</li><li>Open Discussion</li></ol>
+      </section>
+    </main>
+  </div>
+
+  <div id="zhHans" class="page">
+    <div class="hero">
+      <h1>Re-Balance Health</h1>
+      <div class="tagline">Family Health Memory, Assessment & AI Copilot</div>
+      <div class="slogan">One Family. One Health Journey.</div>
+      <div class="meta">Conrad Challenge 2026–2027</div>
+    </div>
+    <nav><a href="#zhs-home">首页</a><a href="#zhs-product">产品</a><a href="#zhs-impact">影响力</a><a href="#zhs-team">团队</a></nav>
+    <main>
+      <section id="zhs-home">
+        <span class="pill">首页</span>
+        <h2>Our Vision</h2>
+        <p class="lead">一个家庭、不同世代、不同居住地点、不同健康需求。</p>
+        <p class="lead">Re-Balance Health 利用 AI 将零散的健康资料转化为可理解、可追踪且可行动的家庭健康旅程。</p>
+        <div class="steps"><div class="step">Collect 收集</div><div class="step">Interpret 解读</div><div class="step">Assess 评估</div><div class="step">Care 照护</div></div>
+      </section>
+
+      <section id="zhs-product">
+        <span class="pill">产品</span>
+        <h2>Core Product Modules</h2>
+        <div class="grid">
+          <div class="card"><h3>1. Family Health Memory</h3><p><strong>What happened?</strong></p><p>将零散的健康资料整理成完整且有意义的家庭健康记忆。</p><ul><li>Health Records 健康记录</li><li>Medical Reports 医疗报告</li><li>Health Timeline 健康时间轴</li><li>Family Sharing 家庭共享</li><li>Privacy Control 隐私权限控制</li></ul></div>
+          <div class="card"><h3>2. AI Copilot</h3><p><strong>What does it mean?</strong></p><p>协助用户理解健康信息与医疗资料。</p><ul><li>Medical Report Interpretation 医疗报告解读</li><li>Health Q&A 健康问答</li><li>Health Insights & Guidance 健康洞察与咨询</li><li>Multilingual Support 多语言支持</li></ul></div>
+          <div class="card"><h3>3. AI-Powered Human Balance Monitoring System</h3><p><strong>How am I doing today?</strong></p><p>利用手机镜头进行平衡与动作功能评估。</p><ul><li>Single-Leg Balance Test 单脚站立测试</li><li>Marching Test 原地踏步测试</li><li>Movement Analysis 动作分析</li><li>Baseline Tracker 个人基准线追踪</li></ul></div>
+        </div>
+        <h2 style="margin-top:28px;">MVP (Phase 1)</h2>
+        <div class="note">
+          <h3>Minimum Viable Product 最小可行产品</h3>
+          <p>The smallest version of the product that delivers meaningful value to users while validating the core concept.</p>
+          <p>第一阶段产品将聚焦于验证 Re-Balance Health 的核心价值与可行性。</p>
+        </div>
+        <div class="grid">
+          <div class="card"><h3>Family Health Memory</h3><ul><li>Upload Health Data 上传健康资料</li><li>Health Timeline 健康时间轴</li></ul></div>
+          <div class="card"><h3>AI Copilot</h3><ul><li>AI Report Interpretation AI 报告解读</li><li>Health Q&A 健康问答</li></ul></div>
+          <div class="card"><h3>Human Balance Monitoring</h3><ul><li>Single-Leg Balance Test 单脚站立测试</li><li>Marching Test 原地踏步测试</li><li>Baseline Tracker 个人基准线追踪</li></ul></div>
+        </div>
+      </section>
+
+      <section id="zhs-impact">
+        <span class="pill">影响力</span>
+        <h2>为什么重要？</h2>
+        <p>协助不同年龄层的家庭成员，将零散的健康资料转化为清楚、可追踪且兼顾个人隐私的健康旅程。</p>
+        <p>通过 AI 医疗信息解读与手机镜头人体平衡监测技术，帮助使用者更早发现潜在风险、更深入了解自身健康状态，并从被动治疗走向主动预防，做出更明智的健康决策。</p>
+      </section>
+
+      <section id="zhs-team">
+        <span class="pill">团队</span>
+        <h2>Team</h2>
+        <div class="grid">
+          <div class="card"><h3>Team A — Family Health Memory</h3><p><strong>Member A</strong></p><ul><li>MVP Planning</li><li>User Story</li><li>Privacy Framework</li></ul><p><strong>Member B</strong></p><ul><li>UI / UX</li><li>Website</li><li>Prototype</li></ul></div>
+          <div class="card"><h3>Team B — Health Intelligence</h3><p><strong>Member C</strong></p><ul><li>AI Copilot</li><li>Medical Report Interpretation</li></ul><p><strong>Member D</strong></p><ul><li>Human Balance Monitoring</li><li>MediaPipe</li><li>Baseline Tracker</li></ul></div>
+        </div>
+        <h2 style="margin-top:28px;">Team Kickoff Meeting #1</h2>
+        <h3>Meeting Agenda</h3>
+        <ol><li>Conrad Challenge Introduction</li><li>Re-Balance Health Introduction</li><li>Product Framework</li><li>Core Product Modules</li><li>Team Structure</li><li>Open Discussion</li></ol>
+      </section>
+    </main>
+  </div>
+
+  <footer>Re-Balance Health · Family Health Memory, Assessment & AI Copilot · One Family. One Health Journey.</footer>
+</div>
+</body>
+</html>
